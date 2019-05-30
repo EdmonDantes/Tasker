@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hintEditTextName_layout_edit_task">Название</string>
+    <string name="textTextViewRepeat_layout_edit_task">Повторять</string>
+    <string name="textTextViewEvery_layout_edit_task">Каждые</string>
+    <string name="textTextViewAlarm_layout_edit_task">Оповещать</string>
+    <string name="textTextViewMaxCount_layout_edit_task">Макс. значение</string>
+
+    <string name="OK">ОК</string>
+    <string name="Cancel">Отмена</string>
+
+    <string name="textMinutes_layout_edit_task">Минут</string>
+    <string name="textHours_layout_edit_task">Часов</string>
+    <string name="textDays_layout_edit_task">Дней</string>
+    <string name="textWeeks_layout_edit_task">Недель</string>
+    <string name="textMonths_layout_edit_task">Месяцев</string>
+    <string name="textYears_layout_edit_task">Лет</string>
+
+    <string name="textAdd_dialog_title">Прибавить</string>
+    <string name="textSub_dialog_title">Отнять</string>
+    <string name="textNumber_dialog_edit_text_hint">Число</string>
+
+    <string name="textWrongNumber_error_toast">Неверное число</string>
+    <string name="textWrongInput_error_toast">Неверный ввод. Проверьте свои данные</string>
+    <string name="textNeedName_error_toast">Укажите название задачи</string>
+
+    <string name="textSeeName_notification">Время для</string>
+    <string name="textSeeCount_notification">Кол-во</string>
+
+    <string name="textNotificationChanelName">Канал задач</string>
+    <string name="textNotificationChanelDescription">Данный канал отправляет уведомление при изменении значения в задаче</string>
+
+    <string name="textAlarmOn_adapter_list_of_tasks">Оповещения включены</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/seeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="8pt"
+        android:textColor="#000"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/seeCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="6pt"
+        android:maxLines="1"/>
+
+
+
+</LinearLayout>

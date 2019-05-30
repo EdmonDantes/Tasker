@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name" translatable="false">Tasker</string>
+    <string name="hintEditTextName_layout_edit_task">Name</string>
+    <string name="textTextViewRepeat_layout_edit_task">Repeat</string>
+    <string name="textTextViewEvery_layout_edit_task">Every</string>
+    <string name="textTextViewAlarm_layout_edit_task">Alarm</string>
+    <string name="textTextViewMaxCount_layout_edit_task">Max count</string>
+
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancel</string>
+
+    <string name="textMinutes_layout_edit_task">Minutes</string>
+    <string name="textHours_layout_edit_task">Hours</string>
+    <string name="textDays_layout_edit_task">Days</string>
+    <string name="textWeeks_layout_edit_task">Weeks</string>
+    <string name="textMonths_layout_edit_task">Months</string>
+    <string name="textYears_layout_edit_task">Years</string>
+
+    <string name="textAdd_dialog_title">Add</string>
+    <string name="textSub_dialog_title">Subtract</string>
+    <string name="textNumber_dialog_edit_text_hint">Number</string>
+
+    <string name="textWrongNumber_error_toast">Wrong number</string>
+
+    <string name="textWrongInput_error_toast">Wrong input. Please check your data</string>
+
+    <string name="textNeedName_error_toast">You must write name of task</string>
+
+    <string name="textSeeName_notification">It is time for</string>
+    <string name="textSeeCount_notification">Count</string>
+
+    <string name="textNotificationChanelName">Action chanel</string>
+    <string name="textNotificationChanelDescription">This chanel send notification about change count in task</string>
+
+    <string name="textAlarmOn_adapter_list_of_tasks">Alarm on</string>
+
+
+</resources>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/nameOfTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#0000"
+            android:hint="@string/hintEditTextName_layout_edit_task"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:textSize="14pt"
+            android:textStyle="bold"
+            android:inputType="textNoSuggestions"
+            android:nextFocusUp="@id/nameOfTask"
+            android:nextFocusDown="@id/nameOfTask"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="add1"
+                    android:text="+1" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="add5"
+                    android:text="+5" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="add10"
+                    android:text="+10" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="add"
+                    android:text="+..." />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/count"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="0"
+                android:textSize="16pt" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="sub1"
+                    android:text="-1" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="sub5"
+                    android:text="-5" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="sub10"
+                    android:text="-10" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="sub"
+                    android:text="-..." />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/repeat"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layoutDirection="rtl"
+            android:text="@string/textTextViewRepeat_layout_edit_task"
+            android:buttonTint="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/repeatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/textTextViewEvery_layout_edit_task"
+                    android:textColor="#000"
+                    android:textSize="10pt" />
+
+                <EditText
+                    android:id="@+id/countOfRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="10pt"
+                    android:backgroundTint="@color/colorPrimary"/>
+
+                <Spinner
+                    android:id="@+id/unitOfRepeat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:backgroundTint="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_marginEnd="16dp">
+
+                <Spinner
+                    android:id="@+id/typeOfAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary">
+                </Spinner>
+
+                <EditText
+                    android:id="@+id/countOfAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="10pt"
+                    android:backgroundTint="@color/colorPrimary"/>
+
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/usingAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layoutDirection="rtl"
+                android:text="@string/textTextViewAlarm_layout_edit_task"
+                android:textColor="#000"
+                android:textSize="10pt"
+                android:buttonTint="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textTextViewMaxCount_layout_edit_task" />
+
+            <EditText
+                android:id="@+id/maxCount"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:inputType="number"
+                android:text="0"
+                android:backgroundTint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Button
+                style="@style/ButtonStyle"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/OK"
+                android:background="@null"
+                android:onClick="ok"/>
+
+            <Button
+                style="@style/ButtonStyle"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Cancel"
+                android:background="@null"
+                android:onClick="cancel"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
