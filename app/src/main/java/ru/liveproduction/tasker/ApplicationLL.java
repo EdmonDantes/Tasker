@@ -2,6 +2,7 @@ package ru.liveproduction.tasker;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 public class ApplicationLL extends Application {
@@ -17,7 +18,12 @@ public class ApplicationLL extends Application {
         super.onCreate();
         Log.d(ApplicationLL.LOG_TAG, "ApplicationLL -> onCreate()");
         manager.load(this);
-        startService(new Intent(this, AlarmManagerService.class));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(new Intent(this, AlarmManagerService.class));
+        } else {
+            startService(new Intent(this, AlarmManagerService.class));
+        }
     }
 
     @Override
