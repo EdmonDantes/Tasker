@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#0000"
-            android:hint="@string/hintEditTextName_layout_edit_task"
+            android:hint="@string/layout_edit_task_name_hint"
             android:maxLines="1"
             android:textColor="#000"
             android:textSize="14pt"
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layoutDirection="rtl"
-            android:text="@string/textTextViewRepeat_layout_edit_task"
+            android:text="@string/layout_edit_task_repeat"
             android:buttonTint="@color/colorPrimary" />
 
         <LinearLayout
@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="@string/textTextViewEvery_layout_edit_task"
+                    android:text="@string/layout_edit_task_every"
                     android:textColor="#000"
                     android:textSize="10pt" />
 
@@ -163,48 +163,225 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
                     android:inputType="number"
                     android:maxLines="1"
                     android:text="1"
+                    android:hint="@string/layout_edit_task_count_of_repeat_hint"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="10pt"
-                    android:backgroundTint="@color/colorPrimary"/>
+                    android:textSize="8pt" />
 
                 <Spinner
                     android:id="@+id/unitOfRepeat"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:backgroundTint="@color/colorPrimary"/>
+                    android:backgroundTint="@color/colorPrimary"
+                    android:entries="@array/timeUnits"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_seconds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="8pt"
+                        android:text="@string/seconds"/>
+
+                    <EditText
+                        android:id="@+id/seconds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seconds"
+                        android:text="00"
+                        android:textSize="8pt"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:textColor="#000"
+                        android:maxLines="1"
+                        android:maxLength="2"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_minutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="8pt"
+                        android:text="@string/minutes"/>
+
+                    <EditText
+                        android:id="@+id/minutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/minutes"
+                        android:text="00"
+                        android:textSize="8pt"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:textColor="#000"
+                        android:maxLines="1"
+                        android:maxLength="2"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="8pt"
+                        android:text="@string/hours"/>
+
+                    <EditText
+                        android:id="@+id/hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hours"
+                        android:text="00"
+                        android:textSize="8pt"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:textColor="#000"
+                        android:maxLines="1"
+                        android:maxLength="2"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_dayOfWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="8pt"
+                        android:text="@string/dayOfWeek"/>
+
+                    <Spinner
+                        android:id="@+id/dayOfWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/daysOfWeek"
+                        android:contentDescription="@string/dayOfWeek">
+                    </Spinner>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/days"
+                        android:textColor="#000"
+                        android:textSize="8pt" />
+
+                    <EditText
+                        android:id="@+id/days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/days"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:maxLines="1"
+                        android:text="0"
+                        android:textColor="#000"
+                        android:textSize="8pt" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/month"
+                        android:textColor="#000"
+                        android:textSize="8pt" />
+
+                    <EditText
+                        android:id="@+id/month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/month"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:maxLines="1"
+                        android:text="0"
+                        android:textColor="#000"
+                        android:textSize="8pt" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:gravity="right"
-                android:layout_marginEnd="16dp">
+                android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/typeOfAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary">
-                </Spinner>
+                    android:backgroundTint="@color/colorPrimary"
+                    android:entries="@array/typeOfActions"/>
 
                 <EditText
                     android:id="@+id/countOfAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
+                    android:backgroundTint="@color/colorPrimary"
                     android:inputType="number"
+                    android:maxLines="1"
                     android:text="1"
+                    android:hint="@string/layout_edit_task_count_of_action_hint"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="10pt"
-                    android:backgroundTint="@color/colorPrimary"/>
+                    android:textSize="10pt" />
 
 
             </LinearLayout>
@@ -214,11 +391,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:buttonTint="@color/colorPrimary"
                 android:layoutDirection="rtl"
-                android:text="@string/textTextViewAlarm_layout_edit_task"
+                android:text="@string/layout_edit_task_alarm_is_on"
                 android:textColor="#000"
-                android:textSize="10pt"
-                android:buttonTint="@color/colorPrimary" />
+                android:textSize="10pt" />
 
         </LinearLayout>
 
@@ -232,7 +409,7 @@
                 style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/textTextViewMaxCount_layout_edit_task" />
+                android:text="@string/layout_edit_task_max_count" />
 
             <EditText
                 android:id="@+id/maxCount"
@@ -242,7 +419,8 @@
                 android:layout_marginStart="8dp"
                 android:inputType="number"
                 android:text="0"
-                android:backgroundTint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="@string/layout_edit_task_value_of_max_count_hint"/>
 
         </LinearLayout>
 
@@ -258,7 +436,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/OK"
+                android:text="@string/layout_edit_task_ok_button"
                 android:background="@null"
                 android:onClick="ok"/>
 
@@ -267,7 +445,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/Cancel"
+                android:text="@string/layout_edit_task_cancel_button"
                 android:background="@null"
                 android:onClick="cancel"/>
 

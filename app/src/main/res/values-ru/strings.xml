@@ -1,34 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hintEditTextName_layout_edit_task">Название</string>
-    <string name="textTextViewRepeat_layout_edit_task">Повторять</string>
-    <string name="textTextViewEvery_layout_edit_task">Каждые</string>
-    <string name="textTextViewAlarm_layout_edit_task">Оповещать</string>
-    <string name="textTextViewMaxCount_layout_edit_task">Макс. значение</string>
 
-    <string name="OK">ОК</string>
-    <string name="Cancel">Отмена</string>
+    <!-- Main activity -->
+    <string name="custom_adapter_every_fmt">Каждые %1$s</string>
+    <string name="custom_adapter_alarm_turn_on">Оповещения включены</string>
+    <string name="custom_adapter_max_count_fmt">Макс. количество %1$d</string>
 
-    <string name="textMinutes_layout_edit_task">Минут</string>
-    <string name="textHours_layout_edit_task">Часов</string>
-    <string name="textDays_layout_edit_task">Дней</string>
-    <string name="textWeeks_layout_edit_task">Недель</string>
-    <string name="textMonths_layout_edit_task">Месяцев</string>
-    <string name="textYears_layout_edit_task">Лет</string>
+    <!-- Time units -->
+    <plurals name="second">
+        <item quantity="one">%1$d Секунда</item>
+        <item quantity="few">%1$d Секунды</item>
+        <item quantity="many">%1$d Секунд</item>
+    </plurals>
 
-    <string name="textAdd_dialog_title">Прибавить</string>
+    <plurals name="minute">
+        <item quantity="one">%1$d Минута</item>
+        <item quantity="few">%1$d Минуты</item>
+        <item quantity="many">%1$d Минут</item>
+    </plurals>
+
+    <plurals name="hour">
+        <item quantity="one">%1$d Час</item>
+        <item quantity="few">%1$d Часа</item>
+        <item quantity="many">%1$d Часов</item>
+    </plurals>
+
+    <plurals name="day">
+        <item quantity="one">%1$d День</item>
+        <item quantity="few">%1$d Дня</item>
+        <item quantity="many">%1$d Дней</item>
+    </plurals>
+
+    <plurals name="week">
+        <item quantity="one">%1$d Неделя</item>
+        <item quantity="few">%1$d Недели</item>
+        <item quantity="many">%1$d Недель</item>
+    </plurals>
+
+    <plurals name="month">
+        <item quantity="one">%1$d Месяц</item>
+        <item quantity="few">%1$d Месяца</item>
+        <item quantity="many">%1$d Месяцов</item>
+    </plurals>
+
+    <plurals name="year">
+        <item quantity="one">%1$d Год</item>
+        <item quantity="few">%1$d Года</item>
+        <item quantity="many">%1$d Лет</item>
+    </plurals>
+
+    <string-array name="timeUnits">
+        <item>Секунд</item>
+        <item>Минут</item>
+        <item>Часов</item>
+        <item>Дней</item>
+        <item>Недель</item>
+        <item>Месяцев</item>
+        <item>Лет</item>
+    </string-array>
+
+    <string name="seconds">Секунда</string>
+    <string name="minutes">Минута</string>
+    <string name="hours">Час</string>
+    <string name="days">День</string>
+    <string name="dayOfWeek">День недели</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="year">Год</string>
+
+
+    <!-- Days of Week -->
+    <string-array name="daysOfWeek">
+        <item></item>
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
+    <string name="layout_edit_task_name_hint">Название</string>
+    <string name="layout_edit_task_repeat">Повторять</string>
+    <string name="layout_edit_task_every">Каждые</string>
+    <string name="layout_edit_task_count_of_repeat_hint">Кол-во времени</string>
+    <string name="layout_edit_task_count_of_action_hint">Кол-во для операции</string>
+    <string name="layout_edit_task_alarm_is_on">Оповещения</string>
+    <string name="layout_edit_task_max_count">Макс. кол-во</string>
+    <string name="layout_edit_task_value_of_max_count_hint">Макс. кол-во</string>
+    <string name="layout_edit_task_ok_button">ОК</string>
+    <string name="layout_edit_task_cancel_button">Отмена</string>
+
+
+    <string name="textAdd_dialog_title">Добавить</string>
     <string name="textSub_dialog_title">Отнять</string>
     <string name="textNumber_dialog_edit_text_hint">Число</string>
 
-    <string name="textWrongNumber_error_toast">Неверное число</string>
-    <string name="textWrongInput_error_toast">Неверный ввод. Проверьте свои данные</string>
-    <string name="textNeedName_error_toast">Укажите название задачи</string>
+    <string name="textWrongNumber_error_toast">Неправильное число</string>
 
-    <string name="textSeeName_notification">Время для</string>
-    <string name="textSeeCount_notification">Кол-во</string>
+    <string name="textWrongInput_error_toast">Неправильные ввод. Проверьте свои данные</string>
 
-    <string name="textNotificationChanelName">Канал задач</string>
-    <string name="textNotificationChanelDescription">Данный канал отправляет уведомление при изменении значения в задаче</string>
+    <string name="textNeedName_error_toast">Вы должны написать название задачи</string>
 
-    <string name="textAlarmOn_adapter_list_of_tasks">Оповещения включены</string>
+    <string name="textSeeName_notification">Время для %1$s</string>
+    <string name="textSeeCount_notification">Кол-во %1$d</string>
+
+    <string name="textNotificationChanelName">Канал для оповещений</string>
+    <string name="textNotificationChanelDescription">Данный канал отправляет уведомления когда задача изменилась</string>
+
 </resources>

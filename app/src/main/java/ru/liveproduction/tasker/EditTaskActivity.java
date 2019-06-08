@@ -1,19 +1,23 @@
 package ru.liveproduction.tasker;
 
-import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,8 +25,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.awt.font.TextAttribute;
 
 public class EditTaskActivity extends AppCompatActivity {
 
@@ -32,6 +34,8 @@ public class EditTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(ApplicationLL.LOG_TAG, "EditTaskActivity -> onStart()");
+
         setContentView(R.layout.layout_edit_task);
 
         ((CheckBox) findViewById(R.id.repeat)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -44,8 +48,51 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         });
 
-        ((Spinner) findViewById(R.id.unitOfRepeat)).setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{getResources().getString(R.string.textMinutes_layout_edit_task), getResources().getString(R.string.textHours_layout_edit_task), getResources().getString(R.string.textDays_layout_edit_task), getResources().getString(R.string.textWeeks_layout_edit_task), getResources().getString(R.string.textMonths_layout_edit_task), getResources().getString(R.string.textYears_layout_edit_task)}));
-        ((Spinner) findViewById(R.id.typeOfAction)).setAdapter((new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"+", "-"})));
+        ((Spinner) findViewById(R.id.unitOfRepeat)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > 0) {
+                    findViewById(R.id.layout_seconds).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.layout_seconds).setVisibility(View.GONE);
+                }
+
+                if (i > 1) {
+                    findViewById(R.id.layout_minutes).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.layout_minutes).setVisibility(View.GONE);
+                }
+
+                if (i > 2) {
+                    findViewById(R.id.layout_hours).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.layout_hours).setVisibility(View.GONE);
+                }
+
+                if (i == 4) {
+                    findViewById(R.id.layout_dayOfWeek).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.layout_dayOfWeek).setVisibility(View.GONE);
+                }
+
+                if (i > 4) {
+                    findViewById(R.id.layout_day).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.layout_day).setVisibility(View.GONE);
+                }
+
+                if (i > 5) {
+                    findViewById(R.id.layout_month).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.layout_month).setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         String name = getIntent().getStringExtra("objectName");
         if (name != null) {
@@ -72,6 +119,12 @@ public class EditTaskActivity extends AppCompatActivity {
                             }
                         }
                     };
+            } else {
+                Intent intent1 = new Intent();
+                intent1.putExtra("objectName", name);
+                setResult(-2, intent1);
+
+                finish();
             }
         }
     }
@@ -80,6 +133,8 @@ public class EditTaskActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d(ApplicationLL.LOG_TAG, "EditTaskActivity -> onNewIntent()");
+
         String name = getIntent().getStringExtra("objectName");
         if (name != null) {
             TaskLL task = ApplicationLL.manager.get(name);
@@ -105,6 +160,12 @@ public class EditTaskActivity extends AppCompatActivity {
                             }
                         }
                     };
+            } else {
+                Intent intent1 = new Intent();
+                intent1.putExtra("objectName", name);
+                setResult(-2, intent1);
+
+                finish();
             }
         } else {
             setContentView(R.layout.layout_edit_task);
@@ -139,13 +200,32 @@ public class EditTaskActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(ApplicationLL.LOG_TAG, "EditTaskActivity -> onStart()");
+
         if (broadcastReceiver != null)
             registerReceiver(broadcastReceiver, new IntentFilter("ru.liveproduction.tasker.update.intent.UpdateTask"));
+
+        String name = getIntent().getStringExtra("objectName");
+        if (name != null) {
+            if (ApplicationLL.manager.getNeedToUpdate().contains(name)) {
+                final TaskLL taskLL = ApplicationLL.manager.use(name);
+                if (taskLL != null && taskLL.getName().toLowerCase().equals(((EditText) findViewById(R.id.nameOfTask)).getText().toString().toLowerCase()))
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((TextView) findViewById(R.id.count)).setText(String.valueOf(taskLL.getCount()));
+                        }
+                    });
+            }
+        }
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(ApplicationLL.LOG_TAG, "EditTaskActivity -> onStop()");
+
         if (broadcastReceiver != null)
             unregisterReceiver(broadcastReceiver);
     }
@@ -160,9 +240,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 ((CheckBox) findViewById(R.id.repeat)).setChecked(task.isRepeat());
                 if (task.isRepeat()) {
                     ((EditText) findViewById(R.id.countOfRepeat)).setText(String.valueOf(task.getCountOfRepeat()));
-                    ((Spinner) findViewById(R.id.unitOfRepeat)).setSelection(TaskLL.indexOfUnit(task.getTypeOfRepeat()) - 1);
-                    ((Spinner) findViewById(R.id.typeOfAction)).setSelection(task.isUsePlus() ? 0 : 1);
-                    ((EditText) findViewById(R.id.countOfAction)).setText(String.valueOf(task.getCountOfAction()));
+                    ((Spinner) findViewById(R.id.unitOfRepeat)).setSelection(task.getTypeOfRepeat());
+                    ((Spinner) findViewById(R.id.typeOfAction)).setSelection(task.getCountOfAction() > 0 ? 0 : 1);
+                    ((EditText) findViewById(R.id.countOfAction)).setText(String.valueOf(Math.abs(task.getCountOfAction())));
                     ((CheckBox) findViewById(R.id.usingAlarm)).setChecked(task.isCreateNotification());
                 }
 
@@ -225,11 +305,14 @@ public class EditTaskActivity extends AppCompatActivity {
 
         final EditText editText = new EditText(this);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setHint(R.string.textNumber_dialog_edit_text_hint);
+        editText.setLeft(16);
+        editText.setRight(16);
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(R.string.textAdd_dialog_title);
         dialog.setView(editText);
-        dialog.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.layout_edit_task_ok_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 final int added;
@@ -255,7 +338,7 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         });
 
-        dialog.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.layout_edit_task_cancel_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -299,11 +382,14 @@ public class EditTaskActivity extends AppCompatActivity {
 
         final EditText editText = new EditText(this);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setHint(R.string.textNumber_dialog_edit_text_hint);
+        editText.setLeft(16);
+        editText.setRight(16);
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(R.string.textSub_dialog_title);
         dialog.setView(editText);
-        dialog.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.layout_edit_task_ok_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 final int sub;
@@ -323,7 +409,7 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         });
 
-        dialog.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.layout_edit_task_cancel_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -352,65 +438,103 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
 
+    private void sendIntentToService(String action, String objectName) {
+        Intent actionAdd = new Intent(this, AlarmManagerService.class);
+        actionAdd.setAction(action);
+        actionAdd.putExtra("objectName", objectName);
+
+        ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
+
+        bindService(actionAdd, serviceConnection, 0);
+        unbindService(serviceConnection);
+    }
+
 
     public void ok(View view){
+        Log.d(ApplicationLL.LOG_TAG, "EditTaskActivity -> ok(); //Send task to db");
         String name = getValue(R.id.nameOfTask);
         long count = getLong(R.id.count);
 
         if (name.length() > 0) {
-            TaskLL task = new TaskLL(name, count);
-            task.setRepeat(getBoolean(R.id.repeat));
-            task.setMaxCount(getLong(R.id.maxCount));
-            if (task.isRepeat()) {
-                task.setCountOfRepeat((int) getLong(R.id.countOfRepeat));
+            boolean repeat = getBoolean(R.id.repeat);
+            long max = getLong(R.id.maxCount);
+            boolean createNotification = getBoolean(R.id.usingAlarm);
 
-                TaskLL.REPEATED_INTERVALS interval = null;
-                switch (((Spinner) findViewById(R.id.unitOfRepeat)).getSelectedItemPosition()) {
-                    case 0:
-                        interval = TaskLL.REPEATED_INTERVALS.MINUTE;
-                        break;
+            TaskLL task;
+
+            if (repeat) {
+                int countOfRepeat = (int) getLong(R.id.countOfRepeat);
+                int unitOfRepeat = ((Spinner) findViewById(R.id.unitOfRepeat)).getSelectedItemPosition();
+                long countOfAction = getLong(R.id.countOfAction);
+                if (((Spinner) findViewById(R.id.typeOfAction)).getSelectedItemPosition() == 1)
+                    countOfAction = -countOfAction;
+
+                ClockLL clock = new ClockLL();
+
+                long seconds = getLong(R.id.seconds);
+                seconds = seconds > 0 && seconds < 61 ? seconds % 60 : clock.getSeconds();
+                long minutes = getLong(R.id.minutes);
+                minutes = minutes > 0 && minutes < 61 ? minutes % 60: clock.getMinutes();
+                long hours = getLong(R.id.hours);
+                hours = hours > 0 && hours < 25 ? hours % 24: clock.getHour();
+                long dayOfWeek = getLong(R.id.dayOfWeek);
+                dayOfWeek = dayOfWeek > 0 && dayOfWeek < 8 ? dayOfWeek : clock.getDayOfWeek();
+                long month = getLong(R.id.month);
+                month = month > 0 && month < 13 ? month : clock.getMonth();
+                long day = getLong(R.id.days);
+                day = day > 0 && day < ClockLL.getDaysOfMonth(clock.getYear(), month) + 1 ? day : clock.getDay();
+
+                long tmpDayOfWeek = clock.getDayOfWeek();
+                while (tmpDayOfWeek != dayOfWeek) {
+                    day--;
+                    tmpDayOfWeek--;
+                    if (tmpDayOfWeek < 1) {
+                        tmpDayOfWeek = 7;
+                    } else if (tmpDayOfWeek > 8) {
+                        tmpDayOfWeek = 1;
+                    }
+                }
+
+
+                switch (unitOfRepeat) {
                     case 1:
-                        interval = TaskLL.REPEATED_INTERVALS.HOUR;
+                        clock = new ClockLL(clock.getYear(), clock.getMonth(), clock.getDay(), clock.getHour(), clock.getMinutes(), seconds, clock.getMilliseconds());
                         break;
                     case 2:
-                        interval = TaskLL.REPEATED_INTERVALS.DAY;
+                        clock = new ClockLL(clock.getYear(), clock.getMonth(), clock.getDay(), clock.getHour(), minutes, seconds, clock.getMilliseconds());
                         break;
                     case 3:
-                        interval = TaskLL.REPEATED_INTERVALS.WEEK;
+                        clock = new ClockLL(clock.getYear(), clock.getMonth(), clock.getDay(), hours, minutes, seconds, clock.getMilliseconds());
                         break;
                     case 4:
-                        interval = TaskLL.REPEATED_INTERVALS.MONTH;
+                        clock = new ClockLL(clock.getYear(), clock.getMonth(), day, hours, minutes, seconds, clock.getMilliseconds());
                         break;
                     case 5:
-                        interval = TaskLL.REPEATED_INTERVALS.YEAR;
+                        clock = new ClockLL(clock.getYear(), clock.getMonth(), day, hours, minutes, seconds, clock.getMilliseconds());
+                        break;
+                    case 6:
+                        clock = new ClockLL(clock.getYear(), month, day, hours, minutes, seconds, clock.getMilliseconds());
                         break;
                 }
-                task.setTypeOfRepeat(interval);
-                task.setUsePlus(((Spinner) findViewById(R.id.typeOfAction)).getSelectedItemPosition() == 0);
-                task.setCountOfAction(getLong(R.id.countOfAction));
-                task.setCreateNotification(getBoolean(R.id.usingAlarm));
-            }
 
-            long max = getLong(R.id.maxCount);
-            if (max > 0)
-                task.setMaxCount(max);
-
-
-            if (task.isRepeat()) {
-                if (!createTask)
-                    ((AlarmManager) getSystemService(Context.ALARM_SERVICE)).cancel(AlarmManagerLL.createIntentForNotification(this, task));
-
-                task.setStartTime(System.currentTimeMillis());
-
-                ((AlarmManager) getSystemService(Context.ALARM_SERVICE)).setRepeating(
-                        AlarmManager.RTC_WAKEUP,
-                        System.currentTimeMillis() + task.getTimeToCloserRepeatInMs(),
-                        task.getTimeForRepeatInMs(),
-                        AlarmManagerLL.createIntentForNotification(this, task)
-                );
+                task = new TaskLL(name, count, Math.max(max, 0), repeat, countOfRepeat, unitOfRepeat, countOfAction, createNotification, createTask ? clock : ApplicationLL.manager.get(getIntent().getStringExtra("objectName")).getStartTime());
+            } else {
+                task = new TaskLL(name, count, Math.max(max, 0), false, 0, 0, 0, createNotification, createTask ? new ClockLL() : ApplicationLL.manager.get(getIntent().getStringExtra("objectName")).getStartTime());
             }
 
             ApplicationLL.manager.update(task);
+
+            sendIntentToService(AlarmManagerService.COMMAND_ADD, task.getName().toLowerCase());
 
             Intent data = new Intent();
             data.putExtra("objectName", task.getName().toLowerCase());

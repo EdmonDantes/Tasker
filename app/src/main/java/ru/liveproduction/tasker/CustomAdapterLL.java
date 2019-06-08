@@ -21,14 +21,17 @@ public class CustomAdapterLL extends BaseAdapter {
     public CustomAdapterLL(Context context){
         this.context = context;
 
-        for (Map.Entry<String, TaskLL> tmp : ApplicationLL.manager.getAll().entrySet()) {
-            list.add(new Pair<String, TaskLL>(tmp.getKey(),tmp.getValue()));
-        }
+        ApplicationLL.manager.forEach(new TaskLLManager.OnGetTask() {
+            @Override
+            public void onGet(TaskLL tmp) {
+                list.add(new Pair<String, TaskLL>(tmp.getName().toLowerCase(),tmp));
+            }
+        });
 
         Collections.sort(list, new Comparator<Pair<String, TaskLL>>() {
             @Override
             public int compare(Pair<String, TaskLL> obj0, Pair<String, TaskLL> obj1) {
-                return -Long.compare(obj0.second.getStartTime(), obj1.second.getStartTime());
+                return -obj0.second.getStartTime().compareTo(obj1.second.getStartTime());
             }
         });
     }
@@ -53,7 +56,7 @@ public class CustomAdapterLL extends BaseAdapter {
         Collections.sort(list, new Comparator<Pair<String, TaskLL>>() {
             @Override
             public int compare(Pair<String, TaskLL> obj0, Pair<String, TaskLL> obj1) {
-                return -Long.compare(obj0.second.getStartTime(), obj1.second.getStartTime());
+                return -obj0.second.getStartTime().compareTo(obj1.second.getStartTime());
             }
         });
         notifyDataSetChanged();
@@ -96,34 +99,34 @@ public class CustomAdapterLL extends BaseAdapter {
             ((TextView) result.findViewById(R.id.nameOfTask)).setText(taskLL.getName());
             ((TextView) result.findViewById(R.id.count)).setText(String.valueOf(taskLL.getCount()));
             if (taskLL.isRepeat()) {
-                StringBuilder builder = new StringBuilder();
-                builder.append(context.getResources().getString(R.string.textTextViewEvery_layout_edit_task)).append(" ").append(taskLL.getCountOfRepeat()).append(" ");
+
                 int id = -1;
                 switch (taskLL.getTypeOfRepeat()) {
-                    case MINUTE:
-                        id = R.string.textMinutes_layout_edit_task;
+                    case TaskLL.INTERVALS_SECONDS:
+                        id = R.plurals.second;
                         break;
-                    case HOUR:
-                        id = R.string.textHours_layout_edit_task;
+                    case TaskLL.INTERVALS_MINUTE:
+                        id = R.plurals.minute;
                         break;
-                    case DAY:
-                        id = R.string.textDays_layout_edit_task;
+                    case TaskLL.INTERVALS_HOUR:
+                        id = R.plurals.hour;
                         break;
-                    case WEEK:
-                        id = R.string.textWeeks_layout_edit_task;
+                    case TaskLL.INTERVALS_DAY:
+                        id = R.plurals.day;
                         break;
-                    case MONTH:
-                        id = R.string.textMonths_layout_edit_task;
+                    case TaskLL.INTERVALS_WEEK:
+                        id = R.plurals.week;
                         break;
-                    case YEAR:
-                        id = R.string.textYears_layout_edit_task;
+                    case TaskLL.INTERVALS_MONTH:
+                        id = R.plurals.month;
+                        break;
+                    case TaskLL.INTERVALS_YEAR:
+                        id = R.plurals.year;
                         break;
                 }
-                builder.append(id > 0 ? context.getResources().getString(id) : "NONE");
-
-                ((TextView) result.findViewById(R.id.every)).setText(builder.toString());
+                ((TextView) result.findViewById(R.id.every)).setText(context.getResources().getString(R.string.custom_adapter_every_fmt, id > 0 ? context.getResources().getQuantityString(id, taskLL.getCountOfRepeat(), taskLL.getCountOfRepeat()).toLowerCase() : "NONE"));
                 if (taskLL.isCreateNotification()) {
-                    ((TextView) result.findViewById(R.id.alarm)).setText(R.string.textAlarmOn_adapter_list_of_tasks);
+                    ((TextView) result.findViewById(R.id.alarm)).setText(R.string.custom_adapter_alarm_turn_on);
                 } else {
                     result.findViewById(R.id.alarm).setVisibility(View.GONE);
                 }
@@ -133,7 +136,7 @@ public class CustomAdapterLL extends BaseAdapter {
             }
 
             if (taskLL.getMaxCount() > 0) {
-                ((TextView) result.findViewById(R.id.max)).setText(context.getResources().getString(R.string.textTextViewMaxCount_layout_edit_task) + " " + taskLL.getMaxCount());
+                ((TextView) result.findViewById(R.id.max)).setText(context.getResources().getString(R.string.custom_adapter_max_count_fmt, taskLL.getMaxCount()));
             } else
                 result.findViewById(R.id.max).setVisibility(View.GONE);
 

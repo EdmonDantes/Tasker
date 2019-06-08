@@ -1,20 +1,97 @@
 <resources>
     <string name="app_name" translatable="false">Tasker</string>
-    <string name="hintEditTextName_layout_edit_task">Name</string>
-    <string name="textTextViewRepeat_layout_edit_task">Repeat</string>
-    <string name="textTextViewEvery_layout_edit_task">Every</string>
-    <string name="textTextViewAlarm_layout_edit_task">Alarm</string>
-    <string name="textTextViewMaxCount_layout_edit_task">Max count</string>
 
-    <string name="OK">OK</string>
-    <string name="Cancel">Cancel</string>
 
-    <string name="textMinutes_layout_edit_task">Minutes</string>
-    <string name="textHours_layout_edit_task">Hours</string>
-    <string name="textDays_layout_edit_task">Days</string>
-    <string name="textWeeks_layout_edit_task">Weeks</string>
-    <string name="textMonths_layout_edit_task">Months</string>
-    <string name="textYears_layout_edit_task">Years</string>
+    <!-- Main activity -->
+    <string name="custom_adapter_every_fmt">Every %1$s</string>
+    <string name="custom_adapter_alarm_turn_on">Alarm is on</string>
+    <string name="custom_adapter_max_count_fmt">Max count %1$d</string>
+
+    <!-- Time units -->
+    <plurals name="second">
+        <item quantity="one">%1$d Second</item>
+        <item quantity="other">%1$d Seconds</item>
+    </plurals>
+
+    <plurals name="minute">
+        <item quantity="one">%1$d Minute</item>
+        <item quantity="other">%1$d Minutes</item>
+    </plurals>
+
+    <plurals name="hour">
+        <item quantity="one">%1$d Hour</item>
+        <item quantity="other">%1$d Hours</item>
+    </plurals>
+
+    <plurals name="day">
+        <item quantity="one">%1$d Day</item>
+        <item quantity="other">%1$d Days</item>
+    </plurals>
+
+    <plurals name="week">
+        <item quantity="one">%1$d Week</item>
+        <item quantity="other">%1$d Weeks</item>
+    </plurals>
+
+    <plurals name="month">
+        <item quantity="one">%1$d Month</item>
+        <item quantity="other">%1$d Months</item>
+    </plurals>
+
+    <plurals name="year">
+        <item quantity="one">%1$d Year</item>
+        <item quantity="other">%1$d Years</item>
+    </plurals>
+
+    <string-array name="timeUnits">
+        <item>Seconds</item>
+        <item>Minutes</item>
+        <item>Hours</item>
+        <item>Days</item>
+        <item>Weeks</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+
+    <string name="seconds">Seconds</string>
+    <string name="minutes">Minutes</string>
+    <string name="hours">Hours</string>
+    <string name="days">Days</string>
+    <string name="dayOfWeek">Day of week</string>
+    <string name="week">Weeks</string>
+    <string name="month">Months</string>
+    <string name="year">Years</string>
+
+
+    <!-- Days of Week -->
+    <string-array name="daysOfWeek">
+        <item></item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <!-- Type of actions -->
+    <string-array name="typeOfActions">
+        <item>+</item>
+        <item>-</item>
+    </string-array>
+    
+    <string name="layout_edit_task_name_hint">Name</string>
+    <string name="layout_edit_task_repeat">Repeat</string>
+    <string name="layout_edit_task_every">Every</string>
+    <string name="layout_edit_task_count_of_repeat_hint">Count of time</string>
+    <string name="layout_edit_task_count_of_action_hint">Count of action</string>
+    <string name="layout_edit_task_alarm_is_on">Alarm is on</string>
+    <string name="layout_edit_task_max_count">Max count</string>
+    <string name="layout_edit_task_value_of_max_count_hint">Value of max count</string>
+    <string name="layout_edit_task_ok_button">OK</string>
+    <string name="layout_edit_task_cancel_button">Cancel</string>
+
 
     <string name="textAdd_dialog_title">Add</string>
     <string name="textSub_dialog_title">Subtract</string>
@@ -26,13 +103,11 @@
 
     <string name="textNeedName_error_toast">You must write name of task</string>
 
-    <string name="textSeeName_notification">It is time for</string>
-    <string name="textSeeCount_notification">Count</string>
+    <string name="textSeeName_notification">It is time for %1$s</string>
+    <string name="textSeeCount_notification">Count %1$d</string>
 
     <string name="textNotificationChanelName">Action chanel</string>
     <string name="textNotificationChanelDescription">This chanel send notification about change count in task</string>
-
-    <string name="textAlarmOn_adapter_list_of_tasks">Alarm on</string>
 
 
 </resources>

@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(ApplicationLL.LOG_TAG, "MainActivity -> onCreate()");
+
+        startService(new Intent(this, AlarmManagerService.class));
         setContentView(R.layout.activity_main);
 
         final Context context = this;
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onUpdateItem(String name) {
         if (name != null) {
-            TaskLL taskLL = ApplicationLL.manager.get(name);
+            TaskLL taskLL = ApplicationLL.manager.use(name);
             if (taskLL != null)
                 ((CustomAdapterLL) ((ListView) findViewById(R.id.listView)).getAdapter()).update(taskLL);
         }
@@ -73,18 +77,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(ApplicationLL.LOG_TAG, "MainActivity -> onStart()");
         if (broadcastReceiver != null)
             registerReceiver(broadcastReceiver, new IntentFilter("ru.liveproduction.tasker.update.intent.UpdateTask"));
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+        for (String tmp : ApplicationLL.manager.getNeedToUpdate()) {
+            onUpdateItem(tmp);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(ApplicationLL.LOG_TAG, "MainActivity -> onStop()");
         if (broadcastReceiver != null)
             unregisterReceiver(broadcastReceiver);
 
@@ -123,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         ApplicationLL.manager.save(this);
+        Log.d(ApplicationLL.LOG_TAG, "MainActivity -> onDestroy()");
         super.onDestroy();
     }
-
-    public void click1(View view) {}
 }
