@@ -289,4 +289,10 @@ public class AlarmManagerService extends Service {
         }
         return START_STICKY;
     }
+
+    @Override
+    public boolean stopService(Intent name) {
+        ApplicationLL.manager.save(this);
+        return super.stopService(name);
+    }
 }

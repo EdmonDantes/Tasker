@@ -68,9 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onUpdateItem(String name) {
         if (name != null) {
-            TaskLL taskLL = ApplicationLL.manager.use(name);
-            if (taskLL != null)
-                ((CustomAdapterLL) ((ListView) findViewById(R.id.listView)).getAdapter()).update(taskLL);
+            ((CustomAdapterLL) ((ListView) findViewById(R.id.listView)).getAdapter()).update(name);
+        }
+    }
+
+    public void onRemoveItem(String name) {
+        if (name != null) {
+            ((CustomAdapterLL) ((ListView) findViewById(R.id.listView)).getAdapter()).remove(name);
         }
     }
 
@@ -83,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
         for (String tmp : ApplicationLL.manager.getNeedToUpdate()) {
             onUpdateItem(tmp);
+        }
+
+        for (String tmp : ApplicationLL.manager.getNeedToRemove()) {
+            onRemoveItem(tmp);
         }
     }
 

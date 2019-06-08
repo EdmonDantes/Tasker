@@ -67,6 +67,11 @@ public class CustomAdapterLL extends BaseAdapter {
         add(taskLL);
     }
 
+    public void update(String name) {
+        _remove(name.toLowerCase());
+        add(ApplicationLL.manager.get(name));
+    }
+
     public void remove(TaskLL taskLL) {
         _remove(taskLL.getName().toLowerCase());
         notifyDataSetChanged();

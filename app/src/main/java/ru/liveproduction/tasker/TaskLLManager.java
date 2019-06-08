@@ -116,7 +116,21 @@ public final class TaskLLManager {
         }
 
         for (Map.Entry<String, Integer> obj : tmp) {
-            if (obj.getValue() > 0)
+            if (obj.getValue() == 1)
+                result.add(obj.getKey());
+        }
+        return result;
+    }
+
+    public LinkedList<String> getNeedToRemove() {
+        LinkedList<String> result = new LinkedList<>();
+        Set<Map.Entry<String, Integer>> tmp = null;
+        synchronized (needUpdate) {
+            tmp = needUpdate.entrySet();
+        }
+
+        for (Map.Entry<String, Integer> obj : tmp) {
+            if (obj.getValue() == 2)
                 result.add(obj.getKey());
         }
         return result;
